@@ -28,12 +28,17 @@ pipeline {
         }
 
         stage('Push the artifacts'){
+            environment {
+                DOCKER_IMAGE = "dhirendrataank/django-todo-app:${BUILD_NUMBER}"
+            }
            steps{
                 script{
                     sh '''
                     echo 'Push to Repo'
-                    docker login --username dhirendrataank --password-stdin yuvaan10AS!@
-                    docker push dhirendrataank/django-todo-app:${BUILD_NUMBER}
+                    def dockerImage = docker.image("${DOCKER_IMAGE}")
+                    docker.withRegistry('https://index.docker.io/v1/', "docker-cred") {
+                        dockerImage.push()
+                    }
                     '''
                 }
             }
