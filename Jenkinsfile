@@ -33,13 +33,10 @@ pipeline {
             }
            steps{
                 script{
-                    sh '''
-                    echo 'Push to Repo'
                     def dockerImage = docker.image("${DOCKER_IMAGE}")
                     docker.withRegistry('https://index.docker.io/v1/', "docker-cred") {
                         dockerImage.push()
                     }
-                    '''
                 }
             }
         }
