@@ -32,6 +32,7 @@ pipeline {
                 script{
                     sh '''
                     echo 'Push to Repo'
+                    docker login -u dhirendra taank -p yuvaan10AS!@
                     docker push dhirendrataank/django-todo-app:${BUILD_NUMBER}
                     '''
                 }
